@@ -75,7 +75,7 @@ export class ScraperService {
       this.configService.get<string>('GEMINI_API_KEY') ||
       process.env.GEMINI_API_KEY;
 
-    if (!apiKey || apiKey.trim() === '') {
+    if (!apiKey || apiKey.trim() === '' || apiKey === 'your_api_key_here') {
       return {
         url: targetUrl,
         textLength: cleanText.length,

@@ -48,6 +48,7 @@ assessment1/
 ## 🔑 Environment Configuration (.env)
 
 ### 1. Backend (`apps/api/.env`)
+
 The backend uses the **Google Gemini API** (`gemini-2.5-flash`).
 
 1. Get a free API key at [Google AI Studio](https://aistudio.google.com/apikey).
@@ -58,7 +59,9 @@ The backend uses the **Google Gemini API** (`gemini-2.5-flash`).
    ```
 
 ### 2. Frontend (`apps/web/.env`)
+
 Configures the backend API URL for the React app:
+
 ```env
 VITE_API_URL=http://localhost:3000
 ```
@@ -74,6 +77,7 @@ You can run both apps either using the root helper commands or by navigating int
 ### Option 1: From the Root Directory (Recommended)
 
 1. **Install all dependencies (single command)**:
+
    ```bash
    npm run install:all
    ```
@@ -82,27 +86,31 @@ You can run both apps either using the root helper commands or by navigating int
    ```bash
    npm run dev
    ```
-   *(Or run them individually via `npm run dev:api` and `npm run dev:web`)*
+   _(Or run them individually via `npm run dev:api` and `npm run dev:web`)_
 
 ---
 
 ### Option 2: Running Independently
 
 #### 1. Backend (NestJS)
+
 ```bash
 cd apps/api
 npm install
 npm run start:dev
 ```
+
 - API Base URL: `http://localhost:3000`
 - Summarize Endpoint: `POST http://localhost:3000/scraper/summarize`
 
 #### 2. Frontend (React + Vite)
+
 ```bash
 cd apps/web
 npm install
 npm run dev
 ```
+
 - Open browser at `http://localhost:5173`
 
 ---
@@ -127,6 +135,22 @@ npm run build
 
 ---
 
+## ☁️ Deploying to Vercel (1-Click Monorepo)
+
+The project includes pre-configured [`vercel.json`] and serverless handlers for a unified, single-domain deployment on Vercel:
+
+1. Push your repository to **GitHub**.
+2. Go to [Vercel](https://vercel.com) and click **"Add New" → "Project"**.
+3. Import your GitHub repository.
+4. Leave the root directory as `./` (default).
+5. In **Environment Variables**, add:
+   - `GEMINI_API_KEY`: Your Google Gemini API key
+6. Click **Deploy**.
+
+Vercel will automatically install all dependencies, build the frontend and backend, serve the React app, and route `/scraper/summarize` to the serverless NestJS handler.
+
+---
+
 ## 🔌 API Reference
 
 ### `POST /scraper/summarize`
@@ -134,6 +158,7 @@ npm run build
 Receives a target URL, extracts text from the HTML, and summarizes it using Gemini.
 
 **Request Body:**
+
 ```json
 {
   "url": "https://en.wikipedia.org/wiki/Artificial_intelligence"
@@ -141,6 +166,7 @@ Receives a target URL, extracts text from the HTML, and summarizes it using Gemi
 ```
 
 **Response (200 OK):**
+
 ```json
 {
   "url": "https://en.wikipedia.org/wiki/Artificial_intelligence",
@@ -153,6 +179,7 @@ Receives a target URL, extracts text from the HTML, and summarizes it using Gemi
 
 ## 💡 Design Highlights
 
-- **Zero Heavy Third-Party Scraping Bloat**: Uses native Node.js `fetch` and lightweight regex tag stripping. No Puppeteer, Cheerio, or headless browser overhead.
-- **REST-based Gemini Integration**: Directly calls the Google Generative Language REST API without bulky SDKs.
-- **Modern UI**: Dark-mode palette, glassmorphism cards, responsive layout, loading indicator, one-click sample URLs, and one-click copy to clipboard.
+- **Zero Heavy Scraping Bloat**: Uses native Node.js `fetch` and optimized regex HTML tag stripping without Puppeteer or Cheerio overhead.
+- **Official Google GenAI SDK**: Integrates `@google/genai` with `gemini-2.5-flash`.
+- **Soft, Human Design System**: Fraunces serif & Source Sans 3 typography, warm cream background (`#FBF7F2`), solid coral action buttons (`#E07856`), sage green navigation accents (`#7BA88F`), and an asymmetric hero layout.
+- **Unified Monorepo Architecture**: Runs locally with standalone servers or deploys seamlessly to Vercel under a single domain.

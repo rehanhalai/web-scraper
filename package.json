@@ -4,6 +4,9 @@
   "private": true,
   "description": "Minimal full-stack AI web scraper monorepo with React and NestJS",
   "scripts": {
+    "install:all": "npm run install:api && npm run install:web",
+    "install:api": "cd apps/api && npm install",
+    "install:web": "cd apps/web && npm install",
     "dev": "npm run dev:api & npm run dev:web",
     "dev:api": "cd apps/api && npm run start:dev",
     "dev:web": "cd apps/web && npm run dev",

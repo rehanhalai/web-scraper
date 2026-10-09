@@ -7,6 +7,8 @@ import { LoadingState } from './components/LoadingState.jsx';
 import { ErrorMessage } from './components/ErrorMessage.jsx';
 import { SummaryCard } from './components/SummaryCard.jsx';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function App() {
   const [url, setUrl] = useState('');
   const [summary, setSummary] = useState('');
@@ -24,7 +26,7 @@ function App() {
     setActiveUrl(url.trim());
 
     try {
-      const response = await fetch('http://localhost:3000/scraper/summarize', {
+      const response = await fetch(`${API_BASE_URL}/scraper/summarize`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,7 +44,7 @@ function App() {
     } catch (err) {
       setError(
         err.message ||
-          'Connection error: Please ensure the NestJS backend is running on http://localhost:3000'
+          `Connection error: Please ensure the NestJS backend is running on ${API_BASE_URL}`
       );
     } finally {
       setLoading(false);

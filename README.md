@@ -23,14 +23,17 @@ assessment1/
     │       ├── app.module.ts
     │       └── scraper/    # Scraper module, controller & service
     └── web/                # React (Vite) Frontend Application
+        ├── .env            # Frontend environment (VITE_API_URL)
+        ├── .env.example    # Frontend environment template
         ├── index.html
         ├── package.json
         ├── vite.config.js
         └── src/
             ├── main.jsx
-            ├── App.jsx     # UI, form, state & summary viewer
-            ├── App.css     # Dark mode glassmorphism UI styling
-            └── index.css   # Global design system & typography
+            ├── App.jsx     # High-level orchestrator
+            ├── App.css     # Warm human styling
+            ├── index.css   # Tokens & typography
+            └── components/ # Modular UI components
 ```
 
 ---
@@ -42,21 +45,23 @@ assessment1/
 
 ---
 
-## 🔑 AI API Key Configuration (.env)
+## 🔑 Environment Configuration (.env)
 
-The backend uses the **Google Gemini API** (`gemini-2.0-flash` free tier).
+### 1. Backend (`apps/api/.env`)
+The backend uses the **Google Gemini API** (`gemini-2.5-flash`).
 
 1. Get a free API key at [Google AI Studio](https://aistudio.google.com/apikey).
-2. Open or create the `.env` file in the **`apps/api/`** directory:
-
-   **File path:** `apps/api/.env`
-
-3. Add your Gemini API key:
-
+2. Edit **`apps/api/.env`**:
    ```env
    GEMINI_API_KEY=your_actual_gemini_api_key_here
    PORT=3000
    ```
+
+### 2. Frontend (`apps/web/.env`)
+Configures the backend API URL for the React app:
+```env
+VITE_API_URL=http://localhost:3000
+```
 
 > **Note:** A placeholder `.env` and template `.env.example` are already created in `apps/api/`. If you run the app with the placeholder key, the backend will successfully scrape the webpage and provide instructions on where to add your API key.
 
@@ -68,11 +73,9 @@ You can run both apps either using the root helper commands or by navigating int
 
 ### Option 1: From the Root Directory (Recommended)
 
-1. **Install dependencies**:
+1. **Install all dependencies (single command)**:
    ```bash
-   cd apps/api && npm install --legacy-peer-deps
-   cd ../web && npm install
-   cd ../..
+   npm run install:all
    ```
 
 2. **Start both Backend and Frontend together**:
@@ -88,7 +91,7 @@ You can run both apps either using the root helper commands or by navigating int
 #### 1. Backend (NestJS)
 ```bash
 cd apps/api
-npm install --legacy-peer-deps
+npm install
 npm run start:dev
 ```
 - API Base URL: `http://localhost:3000`
